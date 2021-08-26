@@ -1,15 +1,14 @@
-import express from "express";
+import { Router } from "express";
 import db from "../../db/models/index.js";
-const Product = db.Product;
-const Category = db.Category;
-const router = express.Router();
+const { Product, Category, Comment, User } = db;
+const router = Router();
 
 router
   .route("/")
   .get(async (req, res, next) => {
     try {
       const data = await Product.findAll({
-        include: Category,
+        include: [Category, { model: Comment, include: User }],
       });
       res.send(data);
     } catch (error) {
@@ -31,7 +30,9 @@ router
   .route("/:id")
   .get(async (req, res, next) => {
     try {
-      const data = await Product.findByPk(req.params.id);
+      const data = await Product.findByPk(req.params.id, {
+        include: [Category,{model: Comment, include:User}],
+      });
       res.send(data);
     } catch (error) {
       console.log(error);

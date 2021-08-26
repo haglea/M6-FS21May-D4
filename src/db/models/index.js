@@ -18,7 +18,5 @@ User.hasMany(Comment);
 Comment.belongsTo(Product);
 Product.hasMany(Comment);
 
-Product.belongsToMany(User, { through: { model: Comment, unique: false } });  //unique: false => to prevnt creating primary key 
-User.belongsToMany(Product, { through: { model: Comment, unique: false } }); //unique: false => to prevnt creating primary key
 
-export default { Category, Product, User };
+export default { Category, Product, User, Comment };

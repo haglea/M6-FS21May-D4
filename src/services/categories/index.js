@@ -1,10 +1,9 @@
-import express from "express";
+import { Router } from "express";
 import db from "../../db/models/index.js";
-const Category = db.Category;
-const Product = db.Product;
+const { Category, Product } = db;
 
 
-const router = express.Router();
+const router = Router();
 
 router
   .route("/")
