@@ -1,25 +1,22 @@
 import express from "express";
-import db from "./db/models/index.js";
+import { syncSequelize } from "./db/index.js";
 import cors from "cors";
 import categoryRoutes from "./services/categories/index.js";
 import productRoutes from "./services/products/index.js";
 
 const server = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 server.use(cors());
 
 server.use(express.json());
 server.use("/categories", categoryRoutes);
 server.use("/products", productRoutes);
 
-db.sequelize
- .sync()
- .then(()=>{
-  server.listen(port, () => {
+server.listen(port, async () => {
     console.log(`Server running at ${port}/`);
+    await syncSequelize();
   });
-  server.on("error", (error) =>
+  
+server.on("error", (error) =>
     console.log(error)
   );
- })
- .catch((e)=>console.log(e)); 

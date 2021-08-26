@@ -14,6 +14,9 @@ const Category = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+    },
+    {
+        schema: "development",
     }
 );
 
